@@ -19,7 +19,16 @@ Route::get('/template', function () {
 });
 
 Route::controller(UserController::class)->group(function () {
-    Route::get('/login' , 'login')->name('login');
-    Route::post('/login' , 'authenticate');
-    Route::post('/logout' , 'logout');
+    Route::middleware('onlyGuest')->group(function () {
+        Route::get('/login' , 'login')->name('login');
+        Route::post('/login' , 'authenticate');
+    });
+
+    Route::middleware('onlyAuth')->group(function () {
+        Route::get('/', function () {
+            return view('welcome');
+        });
+        Route::post('/logout' , 'logout');
+    });
+
 }); 

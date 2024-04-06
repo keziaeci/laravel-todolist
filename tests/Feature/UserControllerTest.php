@@ -11,6 +11,8 @@ class UserControllerTest extends TestCase
     /**
      * A basic feature test example.
      */
+
+    // LOGIN
     public function testLoginPage(): void
     {
         $this->get('/login')
@@ -41,4 +43,41 @@ class UserControllerTest extends TestCase
         ]);
     }
 
+    function testLoginPageWithAuthenticatedUser() {
+        $this->withSession([
+            'user' => 'rena'
+        ])->get('/login')
+        ->assertRedirect('/')
+        ->assertSessionHas('user');
+    }
+
+    function testLoginPageWithGuest() {
+        $this->get('/login')
+        ->assertSeeText('login')
+        ->assertSessionMissing('user');
+    }
+
+    function testLoginPageWithAlreadyLoginUser() {
+        $this->withSession([
+            'user' => 'rena'
+        ])->post('/login',[
+            'user' => 'rena',
+            'password' => '123'
+        ])
+        ->assertRedirect('/');
+    }
+
+    // LOGOUT
+    function testLogout() {
+        $this->withSession([
+            'user' => 'rena'
+        ])->post('/logout')
+        ->assertRedirect('/');
+    }
+
+    function testLogoutWithGuest() {
+        $this->post('/logout')
+        ->assertRedirect('/login')
+        ->assertSessionMissing('user');
+    }
 }

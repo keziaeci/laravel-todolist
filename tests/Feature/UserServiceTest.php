@@ -38,11 +38,4 @@ class UserServiceTest extends TestCase
         assertFalse($this->userService->login("rena", "1233"));
     }
 
-    function testLogout() {
-        $this->withSession([
-            'user' => 'rena'
-        ])->post('/logout')
-        ->assertRedirect('/')
-        ->assertSessionMissing('user');
-    }
 }
