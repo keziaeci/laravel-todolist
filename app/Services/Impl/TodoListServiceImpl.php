@@ -30,6 +30,6 @@ class TodoListServiceImpl implements TodoListService {
             }
         }
 
-        Session::put("todolist",$todoList);
+        return Session::put("todolist",$todoList);
     }
 }

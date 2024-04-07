@@ -34,7 +34,6 @@ class UserController extends Controller
             "error" => "Username or Password might be wrong!"
         ]);
         // return $this->userService->login($request->user , $request->password);
-
     }
 
     function logout(Request $request) {

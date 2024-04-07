@@ -13,9 +13,10 @@ class TodoListController extends Controller
     public function __construct(private TodoListService $todoListService) {
     }
     function index(){
+        // dd(Session::all());     
         return view('todolist.todolist',[
             "title" => "TODOLIST HOMEPAGE",
-            "todos" => $this->todoListService->getTodoList()
+            "todos" => array_reverse($this->todoListService->getTodoList())
         ]);
     }
 

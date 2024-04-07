@@ -36,13 +36,9 @@
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" name="todo" placeholder="todo">
                         <label for="todo">Todo</label>
-                        @if (isset($error))
-                        <div class="row">
-                            <div class="alert alert-danger" role="alert">
-                                {{ $error }}
-                            </div>
-                        </div>
-                        @endif
+                        @error('todo')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
                     </div>
                     <button class="w-100 btn btn-lg btn-primary" type="submit">Add Todo</button>
                 </form>
@@ -63,8 +59,11 @@
                         <tr>
                             <th scope="row">{{ $todo['id'] }}</th>
                             <td>{{ $todo['todo'] }}</td>
+                            {{-- <td><button>safas</button></td> --}}
                             <td>
-                                <form id="deleteForm" method="post" style="display: none">
+                                <form id="deleteForm" method="post" action="{{ route('remove-todolist', $todo['id']) }}">
+                                    @csrf
+                                    @method('delete')
                                     <button class="w-100 btn btn-lg btn-danger" type="submit">Remove</button>
                                 </form>
                             </td>
