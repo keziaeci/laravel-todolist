@@ -29,7 +29,7 @@ class TodoListController extends Controller
         return redirect('/todolist');
     }
 
-    function removeTodo(Request $request , $id) {
+    function removeTodo($id) {
         $this->todoListService->removeTodoList($id);
         return redirect('/todolist');
     }

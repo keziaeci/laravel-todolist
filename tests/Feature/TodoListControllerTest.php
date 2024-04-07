@@ -2,15 +2,13 @@
 
 namespace Tests\Feature;
 
+use App\Services\TodoListService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class TodoListControllerTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
     public function testIndexPage(): void
     {
         $this->withSession([
@@ -44,5 +42,17 @@ class TodoListControllerTest extends TestCase
         ->assertRedirect('/todolist');
     }
 
-    
+    function testRemoveTodo() {
+        $this->withSession([
+            'user' => 'rena',
+            'todolist' =>[
+                [
+                    'id' => '1',
+                    'todo' => 'rena'
+                ],
+            ] 
+        ])
+        ->delete('/todolist/1/delete')
+        ->assertRedirect('/todolist');
+    }
 }
